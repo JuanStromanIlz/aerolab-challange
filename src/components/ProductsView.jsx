@@ -1,23 +1,29 @@
 import react, {Fragment, useEffect, useState} from "react"
 import styled from 'styled-components'
 import ItemCard from './ItemCard'
+import NavBarProducts from "./NavBarProducts"
 
-const NavBarList = styled.div`
-
+const HomeProducts = styled.div`
+  margin: auto;
 `;
 
 const StyledList = styled.div`
   display: flex;
   flex-wrap: wrap;
-  gap: 24px;
+  gap: 2.4em;
+  margin: 0;
+  padding-top: 3.4em;
 `;
 
 export default function ProductsView(props) {
-  const [products, setProducts] = useState([]);
-
+  const [products, setProducts] = useState({
+    clean: [],
+    filtered: []
+  });
   const [pages, setPage] = useState({
     currentPage: 1,
-    itemsPerPage: 16
+    itemsPerPage: 16,
+    startOfItem: 0
   });
   
   const loadProducts = async () => {
@@ -30,57 +36,45 @@ export default function ProductsView(props) {
         }
       });
     const data = await response.json();
-    setProducts(data);
+    setProducts({clean: data, filtered: data});
   }
 
   useEffect(() => {
     loadProducts()
   }, []);
 
-  function addPage(){
-    setPage(prevValues => {
+  function paginate(list) {
+    const pagView = list.slice(pages.startOfItem, pages.itemsPerPage * pages.currentPage);
+    console.log(pagView)
+    setProducts(prevValues => {
       return {
-        currentPage: prevValues.currentPage + 1,
-        itemsPerPage: prevValues.itemsPerPage
+        clean: prevValues.clean,
+        filtered: pagView
       }
     });
   }
-
-  function subPage(){
-    setPage(prevValues => {
-      return {
-        currentPage: prevValues.currentPage - 1,
-        itemsPerPage: prevValues.itemsPerPage
-      }
-    });
-  }
-  // function paginate(data) {
-  //   const productsPerPag = 16;
-  //   const result = new Array(Math.ceil(data.length / productsPerPag))
-  //     .fill()
-  //     .map(_ => data.splice(0, productsPerPag));
-  //   return result; 
-  // }
 
   return(
-    <Fragment>
-      <NavBarList>
-        <button onClick={() => {addPage()}}>+</button>
-        <button onClick={() => {subPage()}}>-</button>
-      </NavBarList>
+    <HomeProducts>
+      <NavBarProducts
+        products={products}
+        pages={pages}
+        setPage={setPage}
+        paginate={paginate}
+      />
       <StyledList>
-        {products.map(item => 
-          <ItemCard
-            key={item.name}
-            ItemImg={item.img}
-            ItemId={item._id}
-            ItemName={item.name}
-            ItemCost={item.cost}
-            ItemCategory={item.category}
-          /> 
-        )} 
+      {products.filtered.map(item => 
+      <ItemCard
+        key={item.name}
+        ItemImg={item.img}
+        ItemId={item._id}
+        ItemName={item.name}
+        ItemCost={item.cost}
+        ItemCategory={item.category}
+      /> 
+      )}
       </StyledList>
-    </Fragment>
+    </HomeProducts>
   );
 }
 

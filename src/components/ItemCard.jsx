@@ -1,13 +1,13 @@
 import react from "react"
 import styled from "styled-components"
-import {ReactComponent as IconBuyBlue} from "../img/icons/buy-blue.svg"
+import breakpoint from '../commons/breakpoints';
 
 const Card = styled.div`
   background:#ffffff;
-  box-shadow:2px 2px 4px 0 rgba(0,0,0,0.10);
-  width:276px;
-  height:276px;
+  box-shadow:0.2em 0.2em 0.4em 0 rgba(0,0,0,0.10);
   padding: 1rem;
+  width:27.6em;
+  height:27.6em;
 `;
 
 const CardHeader =styled.div`
@@ -24,7 +24,7 @@ const CardImg = styled.img`
   display: block;
 `;
 
-const Icon = styled(IconBuyBlue)`
+const BuyBlue = styled.img`
   position: absolute;
   top: 0; right: 0;
   background: transparent;
@@ -45,7 +45,7 @@ const CardInfo = styled.div`
 
 const Category = styled.h3`
   font-family:SourceSansPro-Regular;
-  font-size:16px;
+  font-size: 1.6em;
   color:#a3a3a3;
   letter-spacing:-0.04px;
   text-align:left;
@@ -53,7 +53,7 @@ const Category = styled.h3`
 
 const ProductName = styled.h1`
   font-family:SourceSansPro-Regular;
-  font-size:18px;
+  font-size:1.8em;
   color:#616161;
   letter-spacing:-0.04px;
   text-align:left;
@@ -63,7 +63,9 @@ export default function ItemCard(props){
   return(
     <Card>
       <CardHeader>
-        <Icon />
+        <BuyBlue 
+          src="icons/buy-blue.svg"
+        />
         <CardImg 
           src={props.ItemImg.url}
         />
