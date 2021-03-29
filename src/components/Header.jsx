@@ -2,6 +2,7 @@ import react, {useEffect, useState} from "react"
 import styled from "styled-components"
 
 const StyledHeader = styled.header`
+  grid-column: 1 / 11;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -19,7 +20,7 @@ const StyledHeader = styled.header`
     margin: 0;
     list-style-type: none;
     > li {
-      font-size:24px;
+      font-size:130%;
       color:#616161;
       letter-spacing:-0.15px;
       line-height:48px;

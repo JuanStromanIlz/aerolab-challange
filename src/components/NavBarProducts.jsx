@@ -2,6 +2,7 @@ import react from "react"
 import styled from "styled-components"
 
 const NavBar = styled.div`
+  grid-column: 2 / 10;
   display:flex;
   flex-direction:row;
   align-items:center;
@@ -129,8 +130,6 @@ const PagView = (props) => {
 const StyledPagView = styled(PagView)`
   display:flex;
   flex-direction:row;
-  position:absolute;
-  right:0;
   button {
     background:transparent;
     border:none;

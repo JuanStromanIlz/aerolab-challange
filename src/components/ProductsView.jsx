@@ -3,14 +3,11 @@ import styled from 'styled-components'
 import ItemCard from './ItemCard'
 import NavBarProducts from "./NavBarProducts"
 
-const HomeProducts = styled.div`
-  margin: auto;
-`;
-
 const StyledList = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  gap: 2.4em;
+  grid-column:2 / 10;
+  display: grid;
+  grid-gap: 24px;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   margin: 0;
   padding-top: 3.4em;
 `;
@@ -55,13 +52,13 @@ export default function ProductsView(props) {
   }
 
   return(
-    <HomeProducts>
-      <NavBarProducts
+    <Fragment>
+      {/* <NavBarProducts
         products={products}
         pages={pages}
         setPage={setPage}
         paginate={paginate}
-      />
+      /> */}
       <StyledList>
       {products.filtered.map(item => 
       <ItemCard
@@ -74,7 +71,7 @@ export default function ProductsView(props) {
       /> 
       )}
       </StyledList>
-    </HomeProducts>
+    </Fragment>
   );
 }
 

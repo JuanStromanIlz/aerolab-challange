@@ -2,12 +2,14 @@ import react from "react"
 import styled from "styled-components"
 
 const StyledHeaderImg = styled.div`
-  max-height:412px;
-  background: url("header-x1.png") no-repeat center;
-  background-size: cover;
-  padding: 284px 0 48px 132px;
+  grid-column: 1 / 11;
+  min-height:412px;
+  ${'' /* padding: 284px 0 48px 132px; */}
   margin-bottom: 67px;
   > h1 {
+    position: absolute;
+    bottom: 35%;
+    left: 10%;
     height: 80px;
     font-size: 64px;
     margin: 0;
@@ -17,15 +19,17 @@ const StyledHeaderImg = styled.div`
 `;
 
 const StyledImg = styled.img`
-  object-fit: fill;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 `;
 
 export default function HeaderImg() {
   return(
     <StyledHeaderImg>
-      {/* <StyledImg 
+      <StyledImg 
         src="header-x1.png"
-      /> */}
+      />
       <h1>Electronics</h1>
     </StyledHeaderImg>
   );

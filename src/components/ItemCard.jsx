@@ -3,25 +3,28 @@ import styled from "styled-components"
 import breakpoint from '../commons/breakpoints';
 
 const Card = styled.div`
+  aspect-ratio: 1/1;
+  display:flex;
+  ${'' /* min-height: 200px;
+  min-width: 200px; */}
+  ${'' /* max-width: 210px; */}
+  flex-direction:column;
+  justify-content: space-between;
   background:#ffffff;
-  box-shadow:0.2em 0.2em 0.4em 0 rgba(0,0,0,0.10);
-  padding: 1rem;
-  width:27.6em;
-  height:27.6em;
+  box-shadow:2px 2px 4px 0 rgba(0,0,0,0.10);
+  padding: 12px;
 `;
 
 const CardHeader =styled.div`
   position: relative;
   height: 70%;
-  place-items: center center;
+  border-bottom: 1px solid #d9d9d9;
 `;
 
 const CardImg = styled.img`
   width: 100%;
-  height: auto;
-  margin-left: auto;
-  margin-right: auto;
-  display: block;
+  height: 100%;
+  object-fit: cover;
 `;
 
 const BuyBlue = styled.img`
@@ -32,28 +35,25 @@ const BuyBlue = styled.img`
   border-radius: 0;
   margin: 0;
   padding: 0;
-  
-`;
-const Hr = styled.hr`
-  background:#d9d9d9;
-  height: 1px;
 `;
 
 const CardInfo = styled.div`
-
+  display:flex;
+  flex-direction:column;
 `;
 
-const Category = styled.h3`
+const Category = styled.span`
   font-family:SourceSansPro-Regular;
-  font-size: 1.6em;
+  font-size:90%;
   color:#a3a3a3;
   letter-spacing:-0.04px;
   text-align:left;
+  margin-bottom: 2.5%;
 `;
 
-const ProductName = styled.h1`
+const ProductName = styled.span`
   font-family:SourceSansPro-Regular;
-  font-size:1.8em;
+  font-size:120%;
   color:#616161;
   letter-spacing:-0.04px;
   text-align:left;
@@ -70,7 +70,6 @@ export default function ItemCard(props){
           src={props.ItemImg.url}
         />
       </CardHeader>
-      <Hr />
       <CardInfo>
         <Category>{props.ItemCategory}</Category>
         <ProductName>{props.ItemName}</ProductName>
