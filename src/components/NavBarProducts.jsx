@@ -4,31 +4,29 @@ import styled from "styled-components"
 const NavBar = styled.div`
   grid-column: 2 / 10;
   display:flex;
-  flex-direction:row;
-  align-items:center;
-  height:48px;
+  justify-content: space-between;
+  max-height:38px;
   padding-bottom:24px;
   border-bottom:1px solid #d9d9d9;
   > div {
-    align-self:stretch;
     color:#616161;
   }
 `;
 
 const Counter = (props) => (
   <div className={props.className}>
-    <span>{props.pages.startOfItem} of {props.products.filtered.length} products</span>
+    <span>{props.pages.startOfItem} of {props.products.length} products</span>
   </div>
 );
 
 const StyledCount = styled(Counter)`
-  padding-right:24px;
-  border-right:1px solid #d9d9d9;
+  flex-grow: 1;
+  display: flex;
+  place-items: center;
   span {
-    font-size:24px;
+    font-size:110%;
     color:#616161;
     letter-spacing:-0.15px;
-    line-height:48px;
     text-align:left;
     margin:0;
   }
@@ -61,15 +59,15 @@ const Search = (props) => {
   function handleClick(pagOption){
     switch (pagOption) {
       case 1:
-        props.paginate(props.products.clean)
+        console.log("caso 1 sin definir")
         break;
       case 2:
-        const descPrice = props.products.clean.sort(orderByPrice("cost", "asc"));
-        props.paginate(descPrice)
+        const descPrice = props.products.sort(orderByPrice("cost", "asc"));
+        props.setProducts(descPrice);
         break;
       case 3:
-        const ascPrice = props.products.clean.sort(orderByPrice("cost", "desc"));
-        props.paginate(ascPrice)
+        const ascPrice = props.products.sort(orderByPrice("cost", "desc"));
+        props.setProducts(ascPrice);
         break;
     
       default:
@@ -77,18 +75,20 @@ const Search = (props) => {
     }
   }
 
-  function categories(products){
-    const productsCategory = products.map(item => item.category);
-    const cleanCategories = [...new Set(productsCategory)];
-    return cleanCategories;
-  }
-
   return(
     <div className={props.className}>
-      <span>Sort by:</span>
-      <button onClick={() => {handleClick(1)}}><span>Most recent</span></button>
-      <button onClick={() => {handleClick(2)}}><span>Lower price</span></button>
-      <button onClick={() => {handleClick(3)}}><span>Highest price</span></button>
+      <div>
+        <span>Sort by:</span>
+      </div>
+      <div>
+        <button onClick={() => {handleClick(1)}}><span>Most recent</span></button>
+      </div>
+      <div>
+        <button onClick={() => {handleClick(2)}}><span>Lower price</span></button>
+      </div>
+      <div>
+        <button onClick={() => {handleClick(3)}}><span>Highest price</span></button>
+      </div>
     </div>
   );
 
@@ -117,68 +117,85 @@ const PagView = (props) => {
 
   return(
     <div className={props.className}>
-      <button onClick={() => {subPage()}}>
-        <img src="icons/arrow-left.svg" />
-      </button>
-      <button onClick={() => {addPage()}}>
-        <img src="icons/arrow-right.svg" />
-      </button>
+      <div className={`${props.pages.startOfItem <= 0 && "hidden" }`}>
+        <button onClick={() => {subPage()}}>
+          <img src="icons/arrow-left.svg" alt="previus page"/>
+        </button>
+      </div>
+      <div className={`${props.pages.startOfItem >= props.products.length && "hidden" }`}>
+        <button onClick={() => {addPage()}}>
+          <img src="icons/arrow-right.svg" alt="next page"/>
+        </button>
+      </div>
+      
     </div>
   );
 }
 
 const StyledPagView = styled(PagView)`
+  flex-grow: 1;
   display:flex;
   flex-direction:row;
-  button {
-    background:transparent;
-    border:none;
-    border-radius:100px;
-    padding:0;
-  }
-  > button:last-child {
-    margin-left:12px;
-  }
-  button:focus {
-  outline:none;
+  justify-content:flex-end;
+  gap: 4px;
+  > div {
+    aspect-ratio: 1/1;
+    display: grid;
+    place-items: center;
+    > button {
+      background:transparent;
+      border:none;
+      border-radius:100px;
+      padding:0;
+      :focus {
+        outline:none;
+      }
+      > img {
+        display: block;
+        max-width: 100%;
+        height: auto;
+      }
+    }
   }
 `;
 
 const StyledSearch = styled(Search)`
+  flex-grow: 2;
   display:flex;
-  flex-direction:row;
+  flex-wrap: wrap;
   place-items:center;
-  span {
-    margin:0;
-    font-size:24px;
-    color:#616161;
-    letter-spacing:-0.15px;
-    line-height:48px;
-    text-align:left;
-  }
-  > span:first-child {
-    margin-left:24px;
-  }
-  button {
-    margin-left: 24px;
-    padding: 0 24px;
-    border-radius:100px;
-    border:none;
-  }
-  button:focus {
-  outline:none;
-  }
-  button:active {
-    background:#0ad4fa;
-    span {
-      color:#ffffff;
+  > div {
+    flex-grow: 1;
+    height: 100%;
+    display: grid;
+    place-items: center;
+    > span {
+      color:#616161;
+      letter-spacing:-0.15px;
+      text-align:left;
+      margin:0;
+      font-size:110%;
+    }
+    > button {
+      height: 100%;
+      padding: 0 24px;
+      border-radius:100px;
+      border:none;
+      font-size:110%;
+      :focus {
+        outline:none;
+      }
+      :active {
+        background:#0ad4fa;
+        span {
+          color:#ffffff;
+        }
+      }
     }
   }
 `;
 
 export default function NavBarProducts(props){
-
-  
 
   return(
     <NavBar>
@@ -190,11 +207,13 @@ export default function NavBarProducts(props){
       <StyledSearch
         className={StyledSearch}
         products={props.products}
-        paginate={props.paginate}
+        setProducts={props.setProducts}
       />
       <StyledPagView
         className={StyledPagView}
         setPage={props.setPage}
+        products={props.products}
+        pages={props.pages}
       />
     </NavBar>
   );

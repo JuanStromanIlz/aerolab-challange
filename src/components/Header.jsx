@@ -5,38 +5,30 @@ const StyledHeader = styled.header`
   grid-column: 1 / 11;
   display: flex;
   flex-direction: row;
-  align-items: center;
+  justify-content: space-between;
   position: sticky;
   top: 0;
-  height: 80px;
+  padding: 1em;
+  max-height: 80px;
   background:#ffffff;
-  padding: 0 42px;
   z-index: 1;
-  justify-content: space-between;
-  > ul {
+  > div:first-child {
+    display: grid;
+    place-items: center;
+  }
+  > div:last-child {
     display: flex;
     flex-direction: row;
-    place-items:center;
-    margin: 0;
-    list-style-type: none;
-    > li {
-      font-size:130%;
-      color:#616161;
-      letter-spacing:-0.15px;
-      line-height:48px;
-      text-align:center;
-      display: flex;
+    gap: 18px;
+    > div {
+      display: grid;
       place-items: center;
-      padding: 0 13px 0 21px;
-      :last-child {
-        margin-left: 18px;
-        border-radius: 100px;
-        background-color: #ededed;
-        > svg {
-          display: block;
-          margin: 4px 0 0 6px;    
-        }
-      }
+    }
+    > div:last-child {
+      border-radius: 100px;
+      padding: 0 13px;
+      background-color: #ededed;
+      grid-template-columns: repeat(2, 1fr);
     }
   }
 `;
@@ -62,13 +54,18 @@ export default function Header(props){
 
   return(
     <StyledHeader>
-      <img src="icons/aerolab-logo.svg"/>
-      <ul>
-        <li>{profile.name}</li>
-        <li>{profile.points}
-            <img src="icons/coin.svg"/>
-        </li>
-      </ul>
+      <div>
+        <img src="icons/aerolab-logo.svg"/>
+      </div>  
+      <div>
+        <div>
+          <span>{profile.name}</span>
+        </div>
+        <div>
+          <span>{profile.points}</span>
+          <img src="icons/coin.svg"/>
+        </div>
+      </div>
     </StyledHeader>
   );
 }
