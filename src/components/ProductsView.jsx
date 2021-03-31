@@ -1,7 +1,12 @@
-import react, {Fragment, useEffect, useState} from "react"
+import {Fragment, useEffect, useState} from "react"
 import styled from 'styled-components'
 import ItemCard from './ItemCard'
 import NavBarProducts from "./NavBarProducts"
+import NavCounter from "./NavCounter";
+import NavPagView from "./NavPagView";
+import NavSearch from "./NavSearch";
+import HeaderImg from "./HeaderImg"
+import Header from "./Header";
 
 const StyledList = styled.div`
   grid-column: 2 / 10;
@@ -9,7 +14,7 @@ const StyledList = styled.div`
   grid-gap: 24px;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   margin: 0;
-  padding-top: 3.4em;
+  padding: 3.4em 0;
 `;
 
 export default function ProductsView(props) {
@@ -46,27 +51,61 @@ export default function ProductsView(props) {
     return pagView.map(item => 
       <ItemCard
         key={item.name}
-        ItemImg={item.img}
-        ItemId={item._id}
-        ItemName={item.name}
-        ItemCost={item.cost}
-        ItemCategory={item.category}
-        userPoints={2000}
+        itemImg={item.img}
+        itemId={item._id}
+        itemName={item.name}
+        itemCost={item.cost}
+        itemCategory={item.category}
+        userPoints={0}
+        token={props.token}
       />
     );
   }
 
-  return(
+  return (
     <Fragment>
+    <Header 
+      token={props.token}
+    />
+    <HeaderImg/>
       <NavBarProducts
-        products={products}
-        setProducts={handleFiltered}
-        pages={pages}
-        setPage={setPage}
+        children={
+          <Fragment>
+            <NavCounter 
+              pages={pages}
+              products={products}
+            />
+            <NavSearch 
+              products={products}
+              setProducts={setProducts}
+              setPage={setPage}
+            />
+            <NavPagView 
+              setPage={setPage}
+              products={products}
+              pages={pages}
+            />
+          </Fragment>
+        }
       />
       <StyledList>
       {paginate()}
       </StyledList>
+      <NavBarProducts
+        children={
+          <Fragment>
+            <NavCounter 
+              pages={pages}
+              products={products}
+            />
+            <NavPagView 
+              setPage={setPage}
+              products={products}
+              pages={pages}
+            />
+          </Fragment>
+        }
+      />
     </Fragment>
   );
 }

@@ -1,21 +1,19 @@
-import { render } from "@testing-library/react";
-import react, { Fragment } from "react"
+import { Fragment, useContext } from "react"
 import styled from "styled-components"
-import breakpoint from '../commons/breakpoints';
-
+import { UserContext } from "./UserContext"
 
 const RedeemNow = (props) => (
   <div className={props.className}>
-    <img src="icons/buy-white.svg"/>
+    <img src="icons/buy-white.svg" alt="buy"/>
     <div>
       <span>{props.ItemCost}</span>
-      <img src="icons/coin.svg"/>
+      <img src="icons/coin.svg" alt="buy"/>
     </div>
-    <button>Redeem now</button>
+    <button onClick={() => props.buyItem(props.userPoints, props.itemCost, props.itemId)}>Redeem now</button>
   </div>
 );
 
-const StyledRedeemNow = styled(RedeemNow)`
+const StyledRedeemItem = styled(RedeemNow)`
   visibility: hidden;
   display: flex;
   flex-direction: column;
@@ -59,15 +57,16 @@ const StyledRedeemNow = styled(RedeemNow)`
     border-radius: 100px;
     border: none;
     padding: 8px auto;
-    background:#ffffff;
+    background:rgb(255,255,255, 0.5);
     min-height:42px;
     margin-bottom: 35%;
     font-size:18px;
     color:#616161;
     letter-spacing:-0.04px;
     text-align:center;
-    &:focus {
-    outline:none;
+    &:hover {
+      background: #ffffff;
+      outline:none;
     }
   }
 `;
@@ -100,7 +99,7 @@ const Card = styled.div`
   &:hover {
     transform: translate(0, -12px);
     box-shadow:2px 2px 100px 0 rgba(0,0,0,0.10);
-    ${StyledRedeemNow} {
+    ${StyledRedeemItem} {
       visibility: visible;
     }
     ${CardHeader} {
@@ -118,12 +117,10 @@ const CardImg = styled.img`
   object-fit: cover;
 `;
 
-
-
 const NeedPoints = (props) => (
     <button className={props.className}>
       <span>You need {props.differenceOfPrice}</span>
-      <img src="icons/coin.svg"/>
+      <img src="icons/coin.svg" alt="your points"/>
     </button>
 );
 
@@ -175,40 +172,64 @@ const ProductName = styled.span`
   text-align:left;
 `;
 
-export default function ItemCard(props){
+export default function ItemCard(props) {
   const canUserBuy = (userPoints, productCost) => userPoints >= productCost;
+  const user = useContext(UserContext);
   const calculatePrice = (userPoints, productCost) => Math.abs(productCost - userPoints);
-  
-  return(
+
+  function buyItem(userPoints, itemCost, itemId) {
+    const request = require('request');
+    const options = {
+      method: 'POST',
+      url: 'https://coding-challenge-api.aerolab.co/redeem',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': `Bearer ${props.token}`
+      },
+      body: JSON.stringify({ productId: itemId })
+    };
+    userPoints < itemCost ? console.log("puntos insuficientes"):
+    request(options, function (error, response, body) {
+      console.log('Status:', response.statusCode);
+      console.log('Headers:', JSON.stringify(response.headers));
+      console.log('Response:', body);
+    });
+  }
+   
+  return (
     <Card>
-    {canUserBuy(props.userPoints, props.ItemCost) ?
+    {canUserBuy(props.userPoints, props.itemCost) ?
       <Fragment>
-        <StyledRedeemNow 
-          className={StyledRedeemNow}
-          ItemCost={props.ItemCost}
+        <StyledRedeemItem 
+          className={StyledRedeemItem}
+          itemCost={props.itemCost}
+          itemId={props.itemId}
+          userPoints={user.points}
+          buyItem={buyItem}
         />
         <CardHeader>
           <BuyBlue 
             src="icons/buy-blue.svg"
           />
           <CardImg 
-            src={props.ItemImg.url}
+            src={props.itemImg.url}
           />
         </CardHeader>
       </Fragment> :
       <CardHeader>
         <StyledNeedPoints 
           className={StyledNeedPoints}
-          differenceOfPrice={calculatePrice(props.userPoints, props.ItemCost)}
+          differenceOfPrice={calculatePrice(props.userPoints, props.itemCost)}
         />
         <CardImg 
-          src={props.ItemImg.url}
+          src={props.itemImg.url}
         />
       </CardHeader>
       } 
       <CardInfo>
-        <Category>{props.ItemCategory}</Category>
-        <ProductName>{props.ItemName}</ProductName>
+        <Category>{props.itemCategory}</Category>
+        <ProductName>{props.itemName}</ProductName>
       </CardInfo>
     </Card>
   );
