@@ -1,9 +1,8 @@
-import react from "react"
 import styled from "styled-components"
 
 const Counter = (props) => (
   <div className={props.className}>
-    <span>{props.pages.currentPage * props.pages.itemsPerPage} of {props.products.length} products</span>
+    <span>{props.products.length < props.pages.itemsPerPage ? props.products.length : (props.pages.itemsPerPage * props.pages.currentPage)} of {props.products.length} products</span>
   </div>
 );
 

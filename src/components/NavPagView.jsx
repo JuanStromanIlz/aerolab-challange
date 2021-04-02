@@ -1,4 +1,3 @@
-import react from "react"
 import styled from "styled-components"
 
 const PagView = (props) => {
@@ -29,7 +28,7 @@ const PagView = (props) => {
           <img src="icons/arrow-left.svg" alt="previus page"/>
         </button>
       </div>
-      <div className={`${props.pages.startOfItem * 2 === props.products.length && "hidden"}`}>
+      <div className={`${props.products.length <= props.pages.itemsPerPage * props.pages.currentPage && "hidden" }`}>
         <button onClick={() => {addPage()}}>
           <img src="icons/arrow-right.svg" alt="next page"/>
         </button>

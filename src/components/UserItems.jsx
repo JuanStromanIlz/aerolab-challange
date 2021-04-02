@@ -1,14 +1,13 @@
 import { Fragment, useEffect, useState } from "react"
-import BuyCard from './BuyCard'
 import NavBarProducts from "./NavBarProducts"
 import NavCounter from "./NavCounter"
 import NavPagView from "./NavPagView"
-import NavSearch from "./NavSearch"
-import HeaderImg from "./HeaderImg"
 import Header from "./Header"
 import ProductsList from "./ProductsList"
+import ItemCard from './ItemCard'
+import HeaderImg from "./HeaderImg"
 
-export default function ProductsView(props) {
+export default function UserItems(props) {
   const [products, setProducts] = useState([]);
   const [pages, setPage] = useState({
     currentPage: 1,
@@ -39,23 +38,20 @@ export default function ProductsView(props) {
   useEffect(() => {
     loadProducts()
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);  
+  }, []); 
 
   return (
     <Fragment>
       <Header 
         token={props.token}
       />
-      <HeaderImg/>
+      <HeaderImg 
+        title="Your items"
+      />
       <NavBarProducts>
         <NavCounter 
           pages={pages}
           products={products}
-        />
-        <NavSearch 
-          products={products}
-          setProducts={setProducts}
-          setPage={setPage}
         />
         <NavPagView 
           setPage={setPage}
@@ -66,8 +62,9 @@ export default function ProductsView(props) {
       <ProductsList
         products={products}
         pages={pages}
+        setPage={setPage}
       >
-        <BuyCard />
+        <ItemCard />
       </ProductsList>
       <NavBarProducts>
         <NavCounter 
@@ -83,4 +80,3 @@ export default function ProductsView(props) {
     </Fragment>
   );
 }
-
