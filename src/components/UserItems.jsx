@@ -62,7 +62,6 @@ export default function UserItems(props) {
       <ProductsList
         products={products}
         pages={pages}
-        setPage={setPage}
       >
         <ItemCard />
       </ProductsList>

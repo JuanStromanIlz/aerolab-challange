@@ -1,4 +1,5 @@
-import react, {useContext, useEffect, useState} from "react"
+import { useContext } from "react"
+import { Link } from "react-router-dom";
 import styled from "styled-components"
 import {UserContext} from "./UserContext"
 
@@ -29,43 +30,43 @@ const StyledHeader = styled.header`
       border-radius: 100px;
       padding: 0 13px;
       background-color: #ededed;
-      grid-template-columns: repeat(2, 1fr);
     }
   }
 `;
 
-export default function Header(props){
-  // const [profile, setProfile] = useState([]);
-  // const loadProfile = async () => {
-  //   const response = await fetch("https://coding-challenge-api.aerolab.co/user/me",
-  //     {
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //         'Accept': 'application/json',
-  //         'Authorization': `Bearer ${props.token}`
-  //       }
-  //     }
-  //   );
-  //   const data = await response.json();
-  //   setProfile(data);
-  // }
-  // useEffect(() => {
-  //   loadProfile();
-  // }, []);
+const StyledLink = styled(Link)`
+  color:#a3a3a3;
+  text-decoration: none;
+  display: flex;
+  flex-direction: row;
+  place-items: center center;
+  gap: 5px;
+  :hover {
+  color: #616161;
+  }
+`;
+
+export default function Header(props) {
   const profile = useContext(UserContext);
   
   return(
     <StyledHeader>
-      <div>
-        <img src="icons/aerolab-logo.svg" alt="aerolab"/>
-      </div>  
+      <Link to='/'>
+        <div>
+          <img src="icons/aerolab-logo.svg" alt="aerolab"/>
+        </div>
+      </Link>
       <div>
         <div>
-          <span>{profile.name}</span>
+          <StyledLink  to='/userItems'>
+            {profile.name}
+          </StyledLink>
         </div>
         <div>
+          <StyledLink to='/addPoints'>
           <span>{profile.points}</span>
           <img src="icons/coin.svg" alt="your points"/>
+          </StyledLink>
         </div>
       </div>
     </StyledHeader>

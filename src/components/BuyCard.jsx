@@ -6,7 +6,7 @@ const RedeemNow = (props) => (
   <div className={props.className}>
     <img src="icons/buy-white.svg" alt="buy"/>
     <div>
-      <span>{props.ItemCost}</span>
+      <span>{props.itemCost}</span>
       <img src="icons/coin.svg" alt="buy"/>
     </div>
     <button onClick={() => props.buyItem(props.userPoints, props.itemCost, props.itemId)}>Redeem now</button>
@@ -199,7 +199,7 @@ export default function ItemCard(props) {
    
   return (
     <Card>
-    {canUserBuy(props.userPoints, props.itemCost) ?
+    {canUserBuy(user.points, props.itemCost) ?
       <Fragment>
         <StyledRedeemItem 
           className={StyledRedeemItem}

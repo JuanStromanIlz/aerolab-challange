@@ -27,16 +27,6 @@ const Search = (props) => {
   function handleClick(pagOption) {
     switch (pagOption) {
       case 1:
-        console.log("caso 1 sin definir")
-        props.setPage(prevValues => {
-          return {
-            currentPage: 1,
-            itemsPerPage: prevValues.itemsPerPage,
-            startOfItem: 0
-          }
-        });
-        break;
-      case 2:
         const descPrice = props.products.sort(orderByPrice("cost", "asc"));
         props.setProducts(descPrice);
         props.setPage(prevValues => {
@@ -47,7 +37,7 @@ const Search = (props) => {
           }
         });
         break;
-      case 3:
+      case 2:
         const ascPrice = props.products.sort(orderByPrice("cost", "desc"));
         props.setProducts(ascPrice);
         props.setPage(prevValues => {
@@ -70,13 +60,10 @@ const Search = (props) => {
         <span>Sort by:</span>
       </div>
       <div>
-        <button onClick={() => {handleClick(1)}}><span>Most recent</span></button>
+        <button onClick={() => {handleClick(1)}}><span>Lower price</span></button>
       </div>
       <div>
-        <button onClick={() => {handleClick(2)}}><span>Lower price</span></button>
-      </div>
-      <div>
-        <button onClick={() => {handleClick(3)}}><span>Highest price</span></button>
+        <button onClick={() => {handleClick(2)}}><span>Highest price</span></button>
       </div>
     </div>
   );

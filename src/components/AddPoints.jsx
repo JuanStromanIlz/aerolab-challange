@@ -2,67 +2,76 @@ import { Fragment, useState } from "react";
 import styled from "styled-components"
 import Header from "./Header"
 
-const ChargeView = styled.div`
-  display: grid;
-  place-items: center center;
-  grid-column: 2 / 10;
-`;
-
 const PointsForm = (props) => {
-
   function selectOnlyThis(value) {
     props.setChecked(value)
   }
 
-  // function chargePoints() {
-  //   props.chargePoints(checked)
-  // }
-
   return (
-    <div className={props.className}>
-      <div></div>
-      <div>
-        <form onSubmit={() => props.chargePoints()}>
-          {props.options.map(opt => 
-            <div>
-              <span>{opt.value}</span>
-              <input 
-                key={opt.key} 
-                onChange={() => selectOnlyThis(opt.value)} 
-                type="checkbox" 
-                checked={opt.value === props.checked} 
-                name={opt.value} 
-              />
-            </div>
-          )}
-          <button type="submit">Add points</button>
-        </form>
-      </div>
-    </div>
+      <form onSubmit={() => props.chargePoints()} className={props.className}>
+      <h3>Need points?</h3>
+        {props.options.map(opt => 
+          <div>
+            <span>{opt.value}</span>
+            <input 
+              key={opt.key} 
+              onChange={() => selectOnlyThis(opt.value)} 
+              type="checkbox" 
+              checked={opt.value === props.checked} 
+              name={opt.value} 
+            />
+          </div>
+        )}
+        <button type="submit"><span>Add points</span></button>
+      </form>
   );
 }
 
 const StyledPointsForm = styled(PointsForm)`
-  > button {
-      height: 100%;
-      padding: 0 24px;
-      border-radius:100px;
-      border:none;
-      font-size:110%;
-      :focus {
-        background:#0ad4fa;
-        outline:none;
-        span {
-          color:#ffffff;
-        }
-      }
-      :active {
-        background:#0ad4fa;
-        span {
-          color:#ffffff;
-        }
+  grid-column: 2 / 10;
+  margin-top: 14px;
+  padding: 1em;
+  display: flex;
+  flex-direction: column;
+  height: min-content;
+  background:#ffffff;
+  box-shadow:2px 2px 4px 0 rgba(0,0,0,0.10);
+  > h3 {
+    text-align: center;
+    margin: 0 12px 12px 12px;
+    border-bottom: 1px solid #a3a3a3;
+    color:#616161;
+  }
+  > div {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 8px;
+    > span {
+      font-size: 18px;
+    }
+  }
+  button {
+    margin: auto;
+    padding: 8px 24px;
+    border-radius:100px;
+    border:none;
+    font-size:110%;
+    :hover {
+      background:#0ad4fa;
+      outline:none;
+      span {
+        color:#ffffff;
       }
     }
+    :active {
+      background:#0ad4fa;
+      span {
+        color:#ffffff;
+      }
+    }
+  }
 `;
 export default function AddPoints(props) {
   const [checked, setChecked] = useState("");
@@ -81,7 +90,7 @@ export default function AddPoints(props) {
         'Accept': 'application/json',
         'Authorization': `Bearer ${props.token}`
       },
-      body: JSON.stringify({ amount: checked })
+      body: JSON.stringify({ amount: checked === "" ? 1000 : checked })
     };
     request(options, function (error, response, body) {
       console.log('Status:', response.statusCode);
@@ -92,7 +101,7 @@ export default function AddPoints(props) {
   return (
     <Fragment>
       <Header />
-      <ChargeView>
+      {/* <ChargeView> */}
         <StyledPointsForm 
           className={StyledPointsForm}
           chargePoints={loadPoints}
@@ -100,7 +109,7 @@ export default function AddPoints(props) {
           checked={checked}
           setChecked={setChecked}
         />
-      </ChargeView>
+      {/* </ChargeView> */}
     </Fragment>
   );
 }

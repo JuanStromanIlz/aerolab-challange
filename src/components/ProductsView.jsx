@@ -46,7 +46,9 @@ export default function ProductsView(props) {
       <Header 
         token={props.token}
       />
-      <HeaderImg/>
+      <HeaderImg
+        title="Electronics"
+      />
       <NavBarProducts>
         <NavCounter 
           pages={pages}
@@ -66,6 +68,7 @@ export default function ProductsView(props) {
       <ProductsList
         products={products}
         pages={pages}
+        token={props.token}
       >
         <BuyCard />
       </ProductsList>
