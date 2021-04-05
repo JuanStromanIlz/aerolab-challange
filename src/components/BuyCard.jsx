@@ -1,6 +1,29 @@
-import { Fragment, useContext } from "react"
+import { forwardRef, Fragment, useContext, useRef } from "react"
 import styled from "styled-components"
 import { UserContext } from "./UserContext"
+
+
+const Success = forwardRef((props, ref) => (
+  <div 
+    className={props.className}
+    ref={ref}
+  >
+    <h1>Success!</h1>
+  </div>
+));
+
+const StyledSuccess = styled(Success)`
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  visibility: hidden;
+  display: grid;
+  place-items: center center;
+  color: #ffffff;
+ 
+`;
 
 const RedeemNow = (props) => (
   <div className={props.className}>
@@ -9,24 +32,25 @@ const RedeemNow = (props) => (
       <span>{props.itemCost}</span>
       <img src="icons/coin.svg" alt="buy"/>
     </div>
-    <button onClick={() => props.buyItem(props.userPoints, props.itemCost, props.itemId)}>Redeem now</button>
+    <button onClick={() => props.buyItem(props.userPoints, props.itemCost, props.itemId)} 
+    >Redeem now</button>
   </div>
 );
 
 const StyledRedeemItem = styled(RedeemNow)`
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   visibility: hidden;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   padding: 0 24px;
   gap: 8px;
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
   z-index: 1;
-  background-image:linear-gradient(-180deg, rgb(10,212,250,0.6) 0%, rgb(37,187,241,0.6) 100%);
+  background-image: linear-gradient(-180deg, rgb(10,212,250,0.6) 0%, rgb(37,187,241,0.6) 100%);
   > img:first-child {
     position: absolute;
     top: 10px; right: 6px;
@@ -42,10 +66,10 @@ const StyledRedeemItem = styled(RedeemNow)`
     justify-content: center;
     align-items: center;
     margin-top: 45%;
-    font-size:36px;
-    color:#ffffff;
-    letter-spacing:-0.08px;
-    text-align:center;
+    font-size: 36px;
+    color: #ffffff;
+    letter-spacing: -0.08px;
+    text-align: center;
     > span {
       margin-right: 10px;
     }
@@ -57,16 +81,22 @@ const StyledRedeemItem = styled(RedeemNow)`
     border-radius: 100px;
     border: none;
     padding: 8px auto;
-    background:rgb(255,255,255, 0.5);
-    min-height:42px;
+    background: rgb(255,255,255, 0.5);
+    min-height: 42px;
     margin-bottom: 35%;
-    font-size:18px;
-    color:#616161;
-    letter-spacing:-0.04px;
-    text-align:center;
+    font-size: 18px;
+    color: #616161;
+    letter-spacing: -0.04px;
+    text-align: center;
     &:hover {
       background: #ffffff;
-      outline:none;
+      outline: none;
+      border: 1px solid rgb(37,187,241,0.6);
+    }
+    &:focus {
+      background: rgb(37,187,241,0.6);
+      outline: none;
+      border: 1px solid rgb(37,187,241,0.6);
     }
   }
 `;
@@ -88,17 +118,18 @@ const BuyBlue = styled.img`
 `;
 
 const Card = styled.div`
+  position: relative;
   aspect-ratio: 1/1;
-  display:flex;
-  flex-direction:column;
+  display: flex;
+  flex-direction: column;
   justify-content: space-between;
   background:#ffffff;
-  box-shadow:2px 2px 4px 0 rgba(0,0,0,0.10);
+  box-shadow: 2px 2px 4px 0 rgba(0,0,0,0.10);
   padding: 12px;
   transition: width .1s, height .1s, transform .1s;
   &:hover {
     transform: translate(0, -12px);
-    box-shadow:2px 2px 100px 0 rgba(0,0,0,0.10);
+    box-shadow: 2px 2px 100px 0 rgba(0,0,0,0.10);
     ${StyledRedeemItem} {
       visibility: visible;
     }
@@ -106,6 +137,37 @@ const Card = styled.div`
       border-bottom: none;
       ${BuyBlue} {
         visibility: hidden;
+      }
+    }
+  }
+  .successClass {
+    visibility: visible;
+    margin: 0 auto;
+    background-color: transparent;
+    animation: 
+      stretch .5s ease-out 1 forwards alternate,
+      fadeOut 3s ease-in 1 alternate;
+    z-index: 2;
+    @keyframes stretch {
+      0% {
+        transform: scale(.1);
+        background-color: transparent;
+        border-radius: 100%;
+      }
+      50% {
+        background-color: rgba(103, 224, 94, 0.5);
+      }
+      100% {
+        transform: scale(1);
+        background-color: #4BB543;
+      }
+    } 
+    @keyframes fadeOut {
+      0% {
+        opacity: 1;
+      }
+      100% {
+        opacity: 0;
       }
     }
   }
@@ -132,17 +194,17 @@ const StyledNeedPoints = styled(NeedPoints)`
   flex-direction: row;
   place-items: center;
   border-radius: 100px;
-  background:rgba(97, 97, 97, 0.5);
+  background: rgba(97, 97, 97, 0.5);
   padding: 0 15px;
-  border:none;
+  border: none;
   &:focus {
-  outline:none;
+  outline: none;
   }
   span {
-    font-size:14px;
-    color:#ffffff;
-    letter-spacing:-0.03px;
-    text-align:right;
+    font-size: 14px;
+    color: #ffffff;
+    letter-spacing: -0.03px;
+    text-align: right;
     margin-right: 6px;
   }
   img {
@@ -151,31 +213,40 @@ const StyledNeedPoints = styled(NeedPoints)`
 `;
 
 const CardInfo = styled.div`
-  display:flex;
-  flex-direction:column;
+  display: flex;
+  flex-direction: column;
 `;
 
 const Category = styled.span`
   font-family:SourceSansPro-Regular;
-  font-size:90%;
-  color:#a3a3a3;
-  letter-spacing:-0.04px;
-  text-align:left;
+  font-size: 90%;
+  color: #a3a3a3;
+  letter-spacing: -0.04px;
+  text-align: left;
   margin-bottom: 2.5%;
 `;
 
 const ProductName = styled.span`
   font-family:SourceSansPro-Regular;
-  font-size:120%;
-  color:#616161;
-  letter-spacing:-0.04px;
-  text-align:left;
+  font-size: 120%;
+  color: #616161;
+  letter-spacing: -0.04px;
+  text-align: left;
 `;
 
 export default function ItemCard(props) {
   const canUserBuy = (userPoints, productCost) => userPoints >= productCost;
   const user = useContext(UserContext);
   const calculatePrice = (userPoints, productCost) => Math.abs(productCost - userPoints);
+  const success = useRef(null);
+  
+  function animateBuy() {
+    success.current.classList.add("successClass")
+    const timeout = setTimeout(() => {
+      success.current.classList.remove("successClass")
+    }, 3000);
+    return () => clearTimeout(timeout);
+  }
 
   function buyItem(userPoints, itemCost, itemId) {
     const request = require('request');
@@ -189,18 +260,21 @@ export default function ItemCard(props) {
       },
       body: JSON.stringify({ productId: itemId })
     };
-    userPoints < itemCost ? console.log("puntos insuficientes"):
     request(options, function (error, response, body) {
-      console.log('Status:', response.statusCode);
-      console.log('Headers:', JSON.stringify(response.headers));
-      console.log('Response:', body);
+      !error ?
+     animateBuy():
+      console.log(error);
     });
   }
    
   return (
     <Card>
     {canUserBuy(user.points, props.itemCost) ?
-      <Fragment>
+      <Fragment> 
+        <StyledSuccess
+          className={StyledSuccess}
+          ref={success}
+        />
         <StyledRedeemItem 
           className={StyledRedeemItem}
           itemCost={props.itemCost}

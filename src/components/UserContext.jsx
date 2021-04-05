@@ -17,17 +17,15 @@ export default function UserContextProvider(props) {
       }
     };
     request(options, function (error, response, body) {
-      // console.log('Status:', response.statusCode);
-      // console.log('Headers:', JSON.stringify(response.headers));
-      // console.log('Response:', body);
-      const userData = JSON.parse(body);
-      setUser(userData);
+      !error ?
+      setUser(JSON.parse(body)) :
+      console.log(error);
     });
   }
 
   useEffect(() => {
     loadProfile();
-  }, []);
+  });
 
   return (
     <UserContext.Provider value={user}>
