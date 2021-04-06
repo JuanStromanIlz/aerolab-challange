@@ -1,7 +1,7 @@
-import { useContext } from "react"
+import { useContext } from "react";
 import { Link } from "react-router-dom";
-import styled from "styled-components"
-import {UserContext} from "./UserContext"
+import styled from "styled-components";
+import {UserContext} from "./UserContext";
 
 const StyledHeader = styled.header`
   grid-column: 1 / 11;
@@ -13,7 +13,7 @@ const StyledHeader = styled.header`
   padding: 1em;
   max-height: 80px;
   background:#ffffff;
-  z-index: 1;
+  z-index: 10;
   > div:first-child {
     display: grid;
     place-items: center;
@@ -30,6 +30,9 @@ const StyledHeader = styled.header`
       border-radius: 100px;
       padding: 0 13px;
       background-color: #ededed;
+      :hover {
+        background: #fff1b3;
+      }
     }
   }
 `;
@@ -40,6 +43,14 @@ const StyledLink = styled(Link)`
   display: flex;
   flex-direction: row;
   place-items: center center;
+  > span {
+    font-family: 'Source Sans Pro', regular;
+    font-size: 20px;
+  }
+  > img {
+      height: 26px;
+      margin-top: 2px;
+    }
   gap: 5px;
   :hover {
   color: #616161;
@@ -49,7 +60,7 @@ const StyledLink = styled(Link)`
 export default function Header(props) {
   const profile = useContext(UserContext);
   
-  return(
+  return (
     <StyledHeader>
       <Link to='/'>
         <div>
@@ -59,7 +70,7 @@ export default function Header(props) {
       <div>
         <div>
           <StyledLink  to='/userItems'>
-            {profile.name}
+            <span>{profile.name}</span>
           </StyledLink>
         </div>
         <div>

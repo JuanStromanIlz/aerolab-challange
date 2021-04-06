@@ -1,12 +1,12 @@
-import { Fragment, useEffect, useState } from "react"
-import BuyCard from './BuyCard'
-import NavBarProducts from "./NavBarProducts"
-import NavCounter from "./NavCounter"
-import NavPagView from "./NavPagView"
-import NavSearch from "./NavSearch"
-import HeaderImg from "./HeaderImg"
-import Header from "./Header"
-import ProductsList from "./ProductsList"
+import { Fragment, useEffect, useState } from "react";
+import BuyCard from './BuyCard';
+import NavBarProducts from "./NavBarProducts";
+import NavCounter from "./NavCounter";
+import NavPagView from "./NavPagView";
+import NavSearch from "./NavSearch";
+import HeaderImg from "./HeaderImg";
+import Header from "./Header";
+import ProductsList from "./ProductsList";
 
 export default function ProductsView(props) {
   const [products, setProducts] = useState([]);
@@ -28,11 +28,9 @@ export default function ProductsView(props) {
       }
     };
     request(options, function (error, response, body) {
-      // console.log('Status:', response.statusCode);
-      // console.log('Headers:', JSON.stringify(response.headers));
-      // console.log('Response:', body);
-      const productsData = JSON.parse(body);
-      setProducts(productsData);
+      !error ?
+        setProducts(JSON.parse(body)):
+        console.log(error);
     });
   }
 

@@ -1,4 +1,4 @@
-import styled from "styled-components"
+import styled from "styled-components";
 
 const PagView = (props) => {
   function addPage() {
@@ -33,32 +33,32 @@ const PagView = (props) => {
           <img src="icons/arrow-right.svg" alt="next page"/>
         </button>
       </div>
-      
     </div>
   );
 }
 
 const StyledPagView = styled(PagView)`
   flex-grow: 1;
-  display:flex;
-  flex-direction:row;
-  justify-content:flex-end;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
   gap: 4px;
   > div {
     aspect-ratio: 1/1;
     display: grid;
     place-items: center;
     > button {
-      background:transparent;
-      border:none;
-      border-radius:100px;
-      padding:0;
+      background: transparent;
+      border: none;
+      border-radius: 100px;
+      padding: 0;
       :focus {
-        outline:none;
+        outline: none;
+        background: #ededed;
       }
       > img {
         display: block;
-        max-width: 100%;
+        width: 100%;
         height: auto;
       }
     }

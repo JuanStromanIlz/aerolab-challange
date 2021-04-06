@@ -1,4 +1,5 @@
-import styled from "styled-components"
+import { useState } from "react";
+import styled from "styled-components";
 
 const Search = (props) => {
   function orderByPrice(key, order = 'asc') {
@@ -36,6 +37,7 @@ const Search = (props) => {
             startOfItem: 0
           }
         });
+        props.setClick(1);
         break;
       case 2:
         const ascPrice = props.products.sort(orderByPrice("cost", "desc"));
@@ -47,6 +49,7 @@ const Search = (props) => {
             startOfItem: 0
           }
         });
+        props.setClick(2);
         break;
     
       default:
@@ -60,10 +63,10 @@ const Search = (props) => {
         <span>Sort by:</span>
       </div>
       <div>
-        <button onClick={() => {handleClick(1)}}><span>Lower price</span></button>
+        <button onClick={() => {handleClick(1)}} className={props.clicked === 1 ? "active" : ""}><span>Lower price</span></button>
       </div>
       <div>
-        <button onClick={() => {handleClick(2)}}><span>Highest price</span></button>
+        <button onClick={() => {handleClick(2)}} className={props.clicked === 2 ? "active" : ""}><span>Highest price</span></button>
       </div>
     </div>
   );
@@ -71,50 +74,58 @@ const Search = (props) => {
 
 const StyledSearch = styled(Search)`
   flex-grow: 2;
-  display:flex;
-  flex-wrap: wrap;
-  place-items:center;
+  display: flex;
+  place-items: center;
   > div {
     flex-grow: 1;
     height: 100%;
     display: grid;
     place-items: center;
     > span {
-      color:#616161;
-      letter-spacing:-0.15px;
-      text-align:left;
-      margin:0;
-      font-size:110%;
+      color: #616161;
+      letter-spacing: -0.15px;
+      text-align: left;
+      margin: 0;
     }
     > button {
       height: 100%;
-      padding: 0 24px;
-      border-radius:100px;
-      border:none;
-      font-size:110%;
+      padding: 0 20px;
+      border-radius: 100px;
+      border: none;
+      font-family: 'Source Sans Pro', regular;
+      font-size: 20px;
+      line-height: 100%;
+      color: #616161;
+      :hover {
+        color: #000;
+      }
       :focus {
-        background:#0ad4fa;
-        outline:none;
+        background: #0ad4fa;
+        outline: none;
         span {
-          color:#ffffff;
+          color :#ffffff;
         }
       }
-      :active {
-        background:#0ad4fa;
-        span {
-          color:#ffffff;
-        }
-      }
+    }
+  }
+  .active {
+    background: #0ad4fa;
+    span {
+      color: #ffffff;
     }
   }
 `;
 
 export default function NavSearch(props) {
+  const [clicked, setClick] = useState("");
+
   return (
     <StyledSearch 
       products={props.products}
       setProducts={props.setProducts}
       setPage={props.setPage}
+      clicked={clicked}
+      setClick={setClick}
     />
   );
 }

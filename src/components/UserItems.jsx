@@ -1,11 +1,11 @@
-import { Fragment, useEffect, useState } from "react"
-import NavBarProducts from "./NavBarProducts"
-import NavCounter from "./NavCounter"
-import NavPagView from "./NavPagView"
-import Header from "./Header"
-import ProductsList from "./ProductsList"
-import ItemCard from './ItemCard'
-import HeaderImg from "./HeaderImg"
+import { Fragment, useEffect, useState } from "react";
+import NavBarProducts from "./NavBarProducts";
+import NavCounter from "./NavCounter";
+import NavPagView from "./NavPagView";
+import Header from "./Header";
+import ProductsList from "./ProductsList";
+import ItemCard from "./ItemCard";
+import HeaderImg from "./HeaderImg";
 
 export default function UserItems(props) {
   const [products, setProducts] = useState([]);
@@ -27,11 +27,9 @@ export default function UserItems(props) {
       }
     };
     request(options, function (error, response, body) {
-      // console.log('Status:', response.statusCode);
-      // console.log('Headers:', JSON.stringify(response.headers));
-      // console.log('Response:', body);
-      const productsData = JSON.parse(body);
-      setProducts(productsData);
+      !error ?
+        setProducts(JSON.parse(body)) :
+        console.log(error);
     });
   }
 

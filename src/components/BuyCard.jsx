@@ -1,14 +1,13 @@
-import { forwardRef, Fragment, useContext, useRef } from "react"
-import styled from "styled-components"
-import { UserContext } from "./UserContext"
-
+import { forwardRef, Fragment, useContext, useRef } from "react";
+import styled from "styled-components";
+import { UserContext } from "./UserContext";
 
 const Success = forwardRef((props, ref) => (
   <div 
     className={props.className}
     ref={ref}
   >
-    <h1>Success!</h1>
+    <img src="icons/check_circle.svg" alt="success"/>
   </div>
 ));
 
@@ -21,19 +20,20 @@ const StyledSuccess = styled(Success)`
   visibility: hidden;
   display: grid;
   place-items: center center;
-  color: #ffffff;
- 
+  > img {
+    width: 50%;
+  }
 `;
 
 const RedeemNow = (props) => (
   <div className={props.className}>
     <img src="icons/buy-white.svg" alt="buy"/>
     <div>
-      <span>{props.itemCost}</span>
-      <img src="icons/coin.svg" alt="buy"/>
+      {props.itemCost}<img src="icons/coin.svg" alt="buy"/>
     </div>
     <button onClick={() => props.buyItem(props.userPoints, props.itemCost, props.itemId)} 
-    >Redeem now</button>
+    >
+    Redeem now</button>
   </div>
 );
 
@@ -47,6 +47,7 @@ const StyledRedeemItem = styled(RedeemNow)`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  font-family: 'Source Sans Pro', regular;
   padding: 0 24px;
   gap: 8px;
   z-index: 1;
@@ -66,16 +67,15 @@ const StyledRedeemItem = styled(RedeemNow)`
     justify-content: center;
     align-items: center;
     margin-top: 45%;
-    font-size: 36px;
+    font-size: 32px;
+    font-family: 'Source Sans Pro', regular;
     color: #ffffff;
-    letter-spacing: -0.08px;
-    text-align: center;
-    > span {
-      margin-right: 10px;
-    }
+    gap: 4px;
     > img {
-      margin-top: 5px;
+      height: 26px;
+      margin-top: 2px;
     }
+    
   }
   button {
     border-radius: 100px;
@@ -84,10 +84,11 @@ const StyledRedeemItem = styled(RedeemNow)`
     background: rgb(255,255,255, 0.5);
     min-height: 42px;
     margin-bottom: 35%;
-    font-size: 18px;
+    font-size: 20px;
+    font-family: 'Source Sans Pro', regular;
     color: #616161;
     letter-spacing: -0.04px;
-    text-align: center;
+    line-height: 38px;
     &:hover {
       background: #ffffff;
       outline: none;
@@ -215,11 +216,13 @@ const StyledNeedPoints = styled(NeedPoints)`
 const CardInfo = styled.div`
   display: flex;
   flex-direction: column;
+  > * { 
+    font-family: 'Source Sans Pro', regular;
+  }
 `;
 
 const Category = styled.span`
-  font-family:SourceSansPro-Regular;
-  font-size: 90%;
+  font-size: 14px;
   color: #a3a3a3;
   letter-spacing: -0.04px;
   text-align: left;
@@ -227,8 +230,7 @@ const Category = styled.span`
 `;
 
 const ProductName = styled.span`
-  font-family:SourceSansPro-Regular;
-  font-size: 120%;
+  font-size: 18px;
   color: #616161;
   letter-spacing: -0.04px;
   text-align: left;
@@ -262,8 +264,8 @@ export default function ItemCard(props) {
     };
     request(options, function (error, response, body) {
       !error ?
-     animateBuy():
-      console.log(error);
+        animateBuy():
+        console.log(error);
     });
   }
    

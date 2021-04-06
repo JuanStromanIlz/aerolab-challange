@@ -1,5 +1,5 @@
-import { cloneElement } from "react"
-import styled from "styled-components"
+import { cloneElement } from "react";
+import styled from "styled-components";
 
 const List = (props) => {
   const pagView = props.products.slice(props.pages.startOfItem, 
@@ -31,7 +31,7 @@ const StyledList = styled(List)`
   grid-gap: 24px;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   margin: 0;
-  padding: 3.4em 0;
+  padding: 3.4em 0 0 0;
 `;
 
 export default function ProductsList(props) {

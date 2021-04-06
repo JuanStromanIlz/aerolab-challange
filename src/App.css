@@ -1,7 +1,0 @@
-.App{
-  display: grid;
-  grid-template-columns: repeat(10, 1fr);
-  grid-template-rows: auto 1fr;
-  background-color: #f9f9f9;
-  padding-bottom: 5em;
-}

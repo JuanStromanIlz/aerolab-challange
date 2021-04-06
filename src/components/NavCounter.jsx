@@ -1,4 +1,4 @@
-import styled from "styled-components"
+import styled from "styled-components";
 
 const Counter = (props) => (
   <div className={props.className}>
@@ -18,11 +18,11 @@ const StyledCounter = styled(Counter)`
   display: flex;
   place-items: center;
   span {
-    font-size:110%;
-    color:#616161;
-    letter-spacing:-0.15px;
-    text-align:left;
-    margin:0;
+    font-size: 20px;
+    color: #616161;
+    letter-spacing: -0.15px;
+    text-align: left;
+    margin: 0;
   }
 `;
 
