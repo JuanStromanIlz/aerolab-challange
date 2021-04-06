@@ -1,7 +1,8 @@
 # Aerolab Challange
-You can access via aerolab-challange-git-main-juanstromanilz.vercel.app
+You can access via 
+[aerolab-challange-git-main-juanstromanilz.vercel.app](aerolab-challange-git-main-juanstromanilz.vercel.app)
 
-#Points
+Points
 
 * Each product should have a visible price in points.
 * The user should be able to sort products by price, from highest to lowest, and vice-versa.
